@@ -11,12 +11,12 @@ Created on Sat Apr 20 12:09:36 2024
 # Time Spent: 1:00
 
 # First Program: Raising a number to a power and taking a logarithm
-import numpy
+import numpy as np
 x = 5
 y = 8
 z = x + y
 
 # Find log2 of z
-a = numpy.log2(z)
+a = np.log2(z)
 
 print(a)
