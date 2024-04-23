@@ -7,44 +7,50 @@
 ## Get user input for initial_deposit below ##
 ##############################################
 initial_deposit = float(input("Enter the initial deposit: "))
-portion_down_payment = 0.25
-cost_of_dream_home = 800000
-cost_of_down_payment = cost_of_dream_home * portion_down_payment
-months = 36
+cost_of_dream_home = float(input("Enter the cost of your dream home: "))
+portion_down_payment = float(input("Enter the portion for down payment in decimals: "))
+
 #########################################################################
 ## Initialize other variables you need (if any) for your program below ##
 ######################################################################### 
+cost_of_down_payment = cost_of_dream_home * portion_down_payment
+months = 36
+tolerance = 100  # Tolerance for savings amount
+max_iterations = 36  # Maximum number of iterations
+
 lower_bound = 0
 upper_bound = 1
-tolerance = 100
 steps = 0
+rate_of_return = None
 
 ##################################################################################################
 ## Determine the lowest rate of return needed to get the down payment for your dream home below ##
 ##################################################################################################
-while steps < 36:
-    # Calculates the rate midpoint
-    r = (lower_bound + upper_bound) / 2
+# Perform bisection search
+while lower_bound <= upper_bound and steps < max_iterations:
+    # Calculate the midpoint rate
+    rate = (lower_bound + upper_bound) / 2
 
-    # Determines the amount of savings needed
-    savings_needed = initial_deposit * (1 + r / 12) ** months
+    # Calculate predicted savings amount
+    savings_needed = initial_deposit * (1 + rate / 12) ** months
 
-    # Detrmines if the savings is withing the tolerance
+    # Check if savings amount is within tolerance
     if abs(savings_needed - cost_of_down_payment) <= tolerance:
-        print(f"Savings amount achieved within tolerance: {savings_needed:.2f}")
+        rate_of_return = rate
         break
     elif savings_needed < cost_of_down_payment:
-        # There is then a need to increase the rate, by shifting towards the upper bound i.e.,
-        lower_bound = r
+        # Increase the rate (move towards upper bound)
+        lower_bound = rate
     else:
-        # The rate decreases towards the lower bound
-        upper_bound = r
-    # Increase steps
+        # Decrease the rate (move towards lower bound)
+        upper_bound = rate
+
+    # Increment steps
     steps += 1
 
-    # This checks if the amount is not achievable within the tolerance. In this case r is set to None
-    if savings_needed < cost_of_down_payment - tolerance and steps == 36:
-        r = None
-
-print(f"Steps taken: {steps}")
-print(f"Minimum rate of return needed: {r:.4f}" if r is not None else "Best savings rate: None \nCannot achieve savings goal")
+# Output results
+if rate_of_return is not None:
+    print(
+        f"Best savings rate: {rate_of_return:.4f}\nSteps in bisection search: {steps}")
+else:
+    print(f"Best savings rate: {rate_of_return}\nSteps in bisection search: {steps}\nFailed to achieve savings goal within tolerance")
