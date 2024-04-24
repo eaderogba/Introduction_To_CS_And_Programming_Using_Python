@@ -1,7 +1,7 @@
 ## 6.100A PSet 1: Part C
-## Name:
-## Time Spent:
-## Collaborators:
+## Name: Adebowale Aderogba
+## Time Spent: Nil
+## Collaborators: Solo
 
 ##############################################
 ## Get user input for initial_deposit below ##
@@ -45,7 +45,7 @@ while lower_bound <= upper_bound and steps < max_iterations:
         # Decrease the rate (move towards lower bound)
         upper_bound = rate
 
-    # Increment steps
+    # Increase steps
     steps += 1
 
 # Output results
@@ -53,4 +53,4 @@ if rate_of_return is not None:
     print(
         f"Best savings rate: {rate_of_return:.4f}\nSteps in bisection search: {steps}")
 else:
-    print(f"Best savings rate: {rate_of_return}\nSteps in bisection search: {steps}\nFailed to achieve savings goal within tolerance")
+    print(f"Best savings rate: {rate_of_return:.4f}\nSteps in bisection search: {steps}\nFailed to achieve savings goal within allowed months.")
